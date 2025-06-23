@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "58ffb997-21c5-4e5c-856a-b12351c344ee",
+		"name": "Simple Books API Tasks",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46104957"
+	},
+	"item": [
+		{
+			"name": "{{URL}}/books/{{AvailableBookId}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const book = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Book is fiction\", function () {\r",
+							"    pm.expect(book.type).to.eql(\"fiction\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Name contains 'Russian'\", function () {\r",
+							"    pm.expect(book.name.toLowerCase()).to.include(\"russian\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/books/{{AvailableBookId}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"books",
+						"{{AvailableBookId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{URL}}/status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains OK\", function () {\r",
+							"    pm.expect(pm.response.json().status).to.eql(\"OK\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/status",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{URL}}/books?type=fiction",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const books = pm.response.json();\r",
+							"\r",
+							"pm.test(\"All books are fiction\", function () {\r",
+							"    books.forEach(book => {\r",
+							"        pm.expect(book.type).to.eql(\"fiction\");\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/books?type=fiction",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "fiction"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{URL}}/books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const books = pm.response.json();\r",
+							"const availableBook = books.find(book => book.available === true);\r",
+							"\r",
+							"pm.test(\"Books are available\", function () {\r",
+							"    pm.expect(availableBook).to.not.be.undefined;\r",
+							"});\r",
+							"\r",
+							"if (availableBook) {\r",
+							"    pm.globals.set(\"AvailableBookId\", availableBook.id);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/books",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
