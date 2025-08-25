@@ -1,0 +1,698 @@
+{
+	"info": {
+		"_postman_id": "d2d4e2fa-09ec-4c0e-80c7-94872c46da0a",
+		"name": "LabFinalB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46104957"
+	},
+	"item": [
+		{
+			"name": "Register User 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"if (pm.response.text()) {  \r",
+							"    let jsonData = pm.response.json();\r",
+							"    pm.collectionVariables.set(\"user1\", jsonData.id);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"User created successfully\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property('id');\r",
+							"    pm.globals.set(\"user1\", jsonData.id);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "access_token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"mahin_140@user.com\",\r\n  \"password\": \"mahin_140\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/register/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test 02",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response JSON\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Save the user ID as a collection variable\r",
+							"pm.collectionVariables.set(\"user2\", jsonData.id);\r",
+							"\r",
+							"// Test to ensure the user was created successfully\r",
+							"pm.test(\"Status code is 201\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"// Optional: check email matches\r",
+							"pm.test(\"Email is correct\", () => {\r",
+							"    pm.expect(jsonData.email).to.eql(\"mahin002@user.com\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "access_token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"first_name\": \"Mahmudul\",\r\n  \"last_name\": \"Mahin\",\r\n  \"email\": \"mahin_140@user.com\",\r\n  \"password\": \"mahin_140\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/register/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test 03",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the response JSON\r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Save the user ID as a collection variable\r",
+							"pm.collectionVariables.set(\"user3\", jsonData.id);\r",
+							"\r",
+							"// Test to ensure the user was created successfully\r",
+							"pm.test(\"Status code is 201\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"// Optional: check first and last name\r",
+							"pm.test(\"Name is correct\", () => {\r",
+							"    pm.expect(jsonData.first_name).to.eql(\"Mahmudul\");\r",
+							"    pm.expect(jsonData.last_name).to.eql(\"Mahin\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "access_token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"first_name\": \"Mahmudul\",\r\n  \"last_name\": \"Mahin\",\r\n  \"address\": \"House 10, Street 5\",\r\n  \"city\": \"Dhaka\",\r\n  \"phone\": \"0123456789\",\r\n  \"dob\": \"1970-01-01\",\r\n  \"password\": \"super-secret\",\r\n  \"email\": \"mahin@doe.com\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/register/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"register",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"pm.globals.set(\"access_token\", jsonData.access_token);\r",
+							"pm.test(\"Login successful\", () => pm.response.to.have.status(200));\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "access_token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"password\": \"mahin_140\",\r\n  \"email\": \"mahin_140@user.com\"\r\n}\r\n\r\n"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/login/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"let jsonData = pm.response.json();\r",
+							"pm.test(\"First name updated\", () => {\r",
+							"    pm.expect(jsonData.first_name).to.eql(\"Mahin\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "access_token",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Transfer-Encoding",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"first_name\": \"Mahmud\",\r\n  \"last_name\": \"Mahin\",\r\n  \"city\": \"Dhaka\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/{{user1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"{{user1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Hammer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Check all returned products have \"hammer\" in the name\r",
+							"jsonData.products.forEach(product => {\r",
+							"    pm.expect(product.name.toLowerCase()).to.include(\"hammer\");\r",
+							"});\r",
+							"\r",
+							"// Save first hammer product ID\r",
+							"pm.collectionVariables.set(\"hammer\", jsonData.products[0].id);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/products/search?q=hammer\n",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "hammer\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Pilers",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Check that product count is 4\r",
+							"pm.expect(jsonData.products.length).to.eql(4);\r",
+							"\r",
+							"// Save out-of-stock plier as \"out_plier\"\r",
+							"let outPlier = jsonData.products.find(p => p.stock === 0);\r",
+							"if(outPlier) {\r",
+							"    pm.collectionVariables.set(\"out_plier\", outPlier.id);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/search?q=pliers\n",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "pliers\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Related Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Check all related products belong to hammer category\r",
+							"jsonData.products.forEach(product => {\r",
+							"    pm.expect(product.category.toLowerCase()).to.include(\"hammer\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{hammer}}/related\n",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{hammer}}",
+						"related\n"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"// Save cart ID\r",
+							"pm.collectionVariables.set(\"cartID\", jsonData.id);\r",
+							"\r",
+							"// Check status code\r",
+							"pm.test(\"Cart created\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/carts/\n",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"carts",
+						"\n"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Hammer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Hammer added to cart\", () => {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"let jsonData = pm.response.json();\r",
+							"pm.test(\"Cart contains hammer\", () => {\r",
+							"    pm.expect(jsonData.products.map(p => p.id)).to.include(parseInt(pm.collectionVariables.get(\"hammer\")));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"product_id\": \"{{hammer}}\",\r\n  \"quantity\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/carts/{{cartID}}\n",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"carts",
+						"{{cartID}}\n"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add pliers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Out-of-stock plier cannot be added\", () => {\r",
+							"    pm.response.to.have.status(400); \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"product_id\": \"{{out_plier}}\",\r\n  \"quantity\": 1\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/carts/{{cartID}}\n",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"carts",
+						"{{cartID}}\n"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://api.practicesoftwaretesting.com",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
+		},
+		{
+			"key": "user1",
+			"value": ""
+		},
+		{
+			"key": "user2",
+			"value": ""
+		},
+		{
+			"key": "user3",
+			"value": ""
+		},
+		{
+			"key": "cartID",
+			"value": ""
+		}
+	]
+}
